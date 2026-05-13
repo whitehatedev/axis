@@ -1,0 +1,353 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0a0e27 0%, #0f172a 100%);
+    color: #e0e0e0;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Header Styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(15, 23, 42, 0.8);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+header h1 {
+    font-size: 1.8rem;
+    background: linear-gradient(135deg, #60a5fa, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.status-container {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.system-mode, .health-status {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.system-mode {
+    background: #1e293b;
+    color: #94a3b8;
+}
+
+.health-status {
+    background: #22c55e;
+    color: white;
+}
+
+.health-status.maintenance {
+    background: #ef4444;
+    animation: pulse 2s infinite;
+}
+
+.health-status.gathering {
+    background: #f59e0b;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Sensor Grid */
+.sensor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.sensor-card {
+    background: rgba(15, 23, 42, 0.9);
+    border-radius: 15px;
+    padding: 20px;
+    border: 2px solid #1e293b;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.sensor-card.faulty {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.sensor-card.normal {
+    border-color: #22c55e;
+}
+
+.sensor-card.warning {
+    border-color: #f59e0b;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.card-header .icon {
+    font-size: 2rem;
+}
+
+.card-header h3 {
+    font-size: 1.2rem;
+    color: #94a3b8;
+}
+
+.sensor-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.sensor-value .unit {
+    font-size: 1rem;
+    color: #64748b;
+}
+
+.sensor-status {
+    font-size: 0.85rem;
+    padding: 4px 8px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.sensor-status.normal {
+    background: #22c55e20;
+    color: #22c55e;
+}
+
+.sensor-status.warning {
+    background: #f59e0b20;
+    color: #f59e0b;
+}
+
+.sensor-status.danger {
+    background: #ef444420;
+    color: #ef4444;
+}
+
+.baseline-info {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #1e293b;
+}
+
+/* Alert Panel */
+.alert-panel {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 30px;
+    animation: slideDown 0.5s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.alert-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.alert-header span {
+    font-size: 2rem;
+}
+
+.alert-header h3 {
+    font-size: 1.3rem;
+}
+
+.alert-message {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.faulty-sensors {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* Info Panel */
+.info-panel, .history-panel {
+    background: rgba(15, 23, 42, 0.8);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(5px);
+}
+
+.info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.refresh-btn {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+
+.refresh-btn:hover {
+    background: #2563eb;
+    transform: scale(1.05);
+}
+
+.info-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.info-item {
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+
+/* Table Styles */
+.table-container {
+    overflow-x: auto;
+    margin-top: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #1e293b;
+}
+
+th {
+    background: #1e293b;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+tr:hover {
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.status-badge.normal {
+    background: #22c55e20;
+    color: #22c55e;
+}
+
+.status-badge.warning {
+    background: #f59e0b20;
+    color: #f59e0b;
+}
+
+.status-badge.danger {
+    background: #ef444420;
+    color: #ef4444;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .sensor-value {
+        font-size: 1.8rem;
+    }
+
+    .info-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    th, td {
+        padding: 8px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Loading Animation */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(59, 130, 246, 0.3);
+    border-radius: 50%;
+    border-top-color: #3b82f6;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}

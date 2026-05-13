@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>AI IoT Predictive Maintenance Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>🤖 AI-Based IoT Machine Maintenance Dashboard</h1>
+            <div class="status-container">
+                <div class="system-mode" id="systemMode">Initializing...</div>
+                <div class="health-status" id="healthStatus">--</div>
+            </div>
+        </header>
+
+        <!-- Live Sensor Cards -->
+        <div class="sensor-grid">
+            <!-- Voltage Card -->
+            <div class="sensor-card" id="voltageCard">
+                <div class="card-header">
+                    <span class="icon">⚡</span>
+                    <h3>Voltage Sensor</h3>
+                </div>
+                <div class="sensor-value">
+                    <span id="voltageValue">--</span>
+                    <span class="unit">V</span>
+                </div>
+                <div class="sensor-status" id="voltageStatus">Normal</div>
+                <div class="baseline-info">
+                    Baseline: <span id="voltageBaseline">--</span> V
+                </div>
+            </div>
+
+            <!-- Current Card -->
+            <div class="sensor-card" id="currentCard">
+                <div class="card-header">
+                    <span class="icon">🔌</span>
+                    <h3>Current Sensor</h3>
+                </div>
+                <div class="sensor-value">
+                    <span id="currentValue">--</span>
+                    <span class="unit">A</span>
+                </div>
+                <div class="sensor-status" id="currentStatus">Normal</div>
+                <div class="baseline-info">
+                    Baseline: <span id="currentBaseline">--</span> A
+                </div>
+            </div>
+
+            <!-- Temperature & Humidity Card -->
+            <div class="sensor-card" id="envCard">
+                <div class="card-header">
+                    <span class="icon">🌡️</span>
+                    <h3>Environment</h3>
+                </div>
+                <div class="sensor-value">
+                    <span id="tempValue">--</span>
+                    <span class="unit">°C</span>
+                    <span style="margin: 0 10px">|</span>
+                    <span id="humidityValue">--</span>
+                    <span class="unit">%</span>
+                </div>
+                <div class="sensor-status" id="envStatus">Normal</div>
+                <div class="baseline-info">
+                    Temp BL: <span id="tempBaseline">--</span>°C |
+                    Hum BL: <span id="humidityBaseline">--</span>%
+                </div>
+            </div>
+
+            <!-- Vibration Card -->
+            <div class="sensor-card" id="vibrationCard">
+                <div class="card-header">
+                    <span class="icon">📳</span>
+                    <h3>Vibration Level</h3>
+                </div>
+                <div class="sensor-value">
+                    <span id="vibrationValue">--</span>
+                    <span class="unit">m/s²</span>
+                </div>
+                <div class="sensor-status" id="vibrationStatus">Normal</div>
+                <div class="baseline-info">
+                    Baseline: <span id="vibrationBaseline">--</span> m/s²
+                </div>
+            </div>
+        </div>
+
+        <!-- Alert Panel -->
+        <div class="alert-panel" id="alertPanel" style="display: none;">
+            <div class="alert-header">
+                <span>⚠️</span>
+                <h3>Maintenance Alert</h3>
+            </div>
+            <div class="alert-message" id="alertMessage"></div>
+            <div class="faulty-sensors" id="faultySensors"></div>
+        </div>
+
+        <!-- Baseline Information -->
+        <div class="info-panel">
+            <div class="info-header">
+                <h3>📊 System Information</h3>
+                <button id="refreshBaselineBtn" class="refresh-btn">⟳ Refresh Baseline</button>
+            </div>
+            <div class="info-content">
+                <div class="info-item">
+                    <strong>Data Gathering Mode:</strong>
+                    <span id="gatheringStatus">--</span>
+                </div>
+                <div class="info-item">
+                    <strong>Baseline Created:</strong>
+                    <span id="baselineDate">--</span>
+                </div>
+                <div class="info-item">
+                    <strong>Last Update:</strong>
+                    <span id="lastUpdate">--</span>
+                </div>
+                <div class="info-item">
+                    <strong>Prediction Rules Active:</strong>
+                    ✓ Voltage: ±15% | ✓ Current: ±25% | ✓ Temp: ±20% | ✓ Humidity: ±20% | ✓ Vibration: ±30%
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Readings Table -->
+        <div class="history-panel">
+            <h3>📈 Recent Readings (Last 6 hours)</h3>
+            <div class="table-container">
+                <table id="readingsTable">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Voltage (V)</th>
+                            <th>Current (A)</th>
+                            <th>Temp (°C)</th>
+                            <th>Humidity (%)</th>
+                            <th>Vibration</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="readingsBody">
+                        <tr><td colspan="7">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
